@@ -4,7 +4,7 @@ import { Instagram, MessageCircle, MapPin, Phone } from 'lucide-react';
 import { fadeInUp, hoverScale } from '../utils/animations';
 
 const ProductCard = ({ product }) => {
-    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const API_BASE = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? window.location.origin : 'http://localhost:5000');
     const imageUrl = product.image ? (product.image.startsWith('http') || product.image.startsWith('/assets') ? product.image : `${API_BASE}${product.image}`) : 'https://via.placeholder.com/150';
 
     return (
