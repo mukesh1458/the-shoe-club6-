@@ -18,7 +18,8 @@ Follow these steps to deploy your project to Render.
 
 ## 3. Configure Environment Variables
 Click on the **Environment** tab and add the following variables:
-- `MONGO_URI`: `mongodb+srv://theshoeclub66_db_user:theshoeclub666@cluster0.lleseay.mongodb.net/theshoeclub?retryWrites=true&w=majority`
+- `MONGO_URI`: `mongodb+srv://theshoeclub66_db_user:<password>@cluster0.lleseay.mongodb.net/theshoeclub?retryWrites=true&w=majority`
+
 - `JWT_SECRET`: `supersecretkey_the_shoe_club` (or your own secret)
 - `NODE_ENV`: `production`
 - `PORT`: `5000`
