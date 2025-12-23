@@ -81,7 +81,7 @@ const ProductCard = ({ product }) => {
                     <h3 className="text-lg md:text-xl text-cream font-serif font-medium group-hover:text-gold-accent transition-colors duration-500 leading-tight">
                         {product.title}
                     </h3>
-                    <p className="text-base md:text-lg font-serif text-gold-accent tracking-tighter shrink-0 ml-4">{product.price}</p>
+                    <p className="text-base md:text-lg font-serif text-gold-accent tracking-tighter shrink-0 ml-4">₹{product.price ? product.price.toString().replace(/[^\d]/g, '') : '0'}</p>
                 </div>
                 <div className="flex justify-between items-center">
                     <p className="text-[9px] md:text-[10px] text-gray-500 uppercase tracking-[0.2em] md:tracking-[0.3em] font-medium">{product.category}</p>

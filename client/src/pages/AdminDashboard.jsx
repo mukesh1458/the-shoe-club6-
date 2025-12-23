@@ -183,7 +183,7 @@ const AdminDashboard = () => {
                                             </div>
                                             <div>
                                                 <h4 className="font-serif text-lg leading-tight">{item.title}</h4>
-                                                <p className="text-sm text-gold-accent mt-1">{item.price}</p>
+                                                <p className="text-sm text-gold-accent mt-1">₹{item.price ? item.price.toString().replace(/[^\d]/g, '') : '0'}</p>
                                             </div>
                                         </div>
                                         <div className="flex space-x-3 justify-end sm:justify-start">
@@ -246,8 +246,19 @@ const AdminDashboard = () => {
                                 <>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-sm text-gray-400 mb-1">Price</label>
-                                            <input name="price" value={formData.price || ''} onChange={handleChange} className="w-full bg-luxury-black border border-white/10 rounded p-2 text-white focus:border-gold-accent outline-none" required />
+                                            <label className="block text-sm text-gray-400 mb-1">Price (₹)</label>
+                                            <div className="relative">
+                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gold-accent">₹</span>
+                                                <input
+                                                    name="price"
+                                                    type="number"
+                                                    value={formData.price ? formData.price.toString().replace(/[^\d]/g, '') : ''}
+                                                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                                                    className="w-full bg-luxury-black border border-white/10 rounded p-2 pl-8 text-white focus:border-gold-accent outline-none"
+                                                    placeholder="0"
+                                                    required
+                                                />
+                                            </div>
                                         </div>
                                         <div>
                                             <label className="block text-sm text-gray-400 mb-1">Category</label>
