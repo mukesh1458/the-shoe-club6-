@@ -273,7 +273,7 @@ const AdminDashboard = () => {
                                         {(selectedFile || (editingItem && editingItem.image)) && (
                                             <div className="mt-2 h-20 w-20 rounded overflow-hidden border border-white/10">
                                                 <img
-                                                    src={selectedFile ? URL.createObjectURL(selectedFile) : (editingItem.image.startsWith('http') || editingItem.image.startsWith('/assets') ? editingItem.image : `${API_BASE}${editingItem.image}`)}
+                                                    src={selectedFile ? URL.createObjectURL(selectedFile) : (editingItem.image && (editingItem.image.startsWith('http') || editingItem.image.startsWith('/assets') || editingItem.image.startsWith('data:')) ? editingItem.image : `${API_BASE}${editingItem.image}`)}
                                                     className="h-full w-full object-cover"
                                                     alt="Preview"
                                                 />

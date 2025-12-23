@@ -5,7 +5,7 @@ import { fadeInUp, hoverScale } from '../utils/animations';
 import { API_BASE } from '../utils/api';
 
 const ProductCard = ({ product }) => {
-    const imageUrl = product.image ? (product.image.startsWith('http') || product.image.startsWith('/assets') ? product.image : `${API_BASE}${product.image}`) : 'https://via.placeholder.com/150';
+    const imageUrl = product.image ? (product.image.startsWith('http') || product.image.startsWith('/assets') || product.image.startsWith('data:') ? product.image : `${API_BASE}${product.image}`) : 'https://via.placeholder.com/150';
 
     return (
         <motion.div

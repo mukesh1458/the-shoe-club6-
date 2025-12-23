@@ -1,26 +1,13 @@
 const router = require('express').Router();
 const Product = require('../models/Product');
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
 
-// Ensure uploads directory exists
-const uploadDir = path.join(__dirname, '..', 'uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Multer storage config
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, uploadDir);
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
+
+const convertToBase64 = (file) => {
+    return `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
+};
 
 // Get All Products
 router.get('/', async (req, res) => {
@@ -37,7 +24,7 @@ router.post('/', upload.single('image'), async (req, res) => {
     try {
         const productData = { ...req.body };
         if (req.file) {
-            productData.image = `/uploads/${req.file.filename}`;
+            productData.image = convertToBase64(req.file);
         }
         const newProduct = new Product(productData);
         const saved = await newProduct.save();
@@ -52,7 +39,7 @@ router.put('/:id', upload.single('image'), async (req, res) => {
     try {
         const productData = { ...req.body };
         if (req.file) {
-            productData.image = `/uploads/${req.file.filename}`;
+            productData.image = convertToBase64(req.file);
         }
         const updated = await Product.findByIdAndUpdate(req.params.id, productData, { new: true });
         res.json(updated);
@@ -64,13 +51,6 @@ router.put('/:id', upload.single('image'), async (req, res) => {
 // Delete Product
 router.delete('/:id', async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
-        if (product && product.image && product.image.startsWith('/uploads/')) {
-            const filePath = path.join(__dirname, '..', product.image);
-            if (fs.existsSync(filePath)) {
-                fs.unlinkSync(filePath);
-            }
-        }
         await Product.findByIdAndDelete(req.params.id);
         res.json({ msg: 'Product deleted' });
     } catch (err) {
