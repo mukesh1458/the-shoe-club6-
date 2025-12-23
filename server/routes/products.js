@@ -88,28 +88,28 @@ router.post('/seed', async (req, res) => {
                 category: "Boot",
                 image: "/assets/chelsea-boots.jpg",
                 description: "Classic elegance meets modern durability. Crafted from premium calfskin leather.",
-                price: "$450"
+                price: "450"
             },
             {
                 title: "Penny Loafer",
                 category: "Loafer",
                 image: "/assets/penny-loafers.jpg",
                 description: "The quintessential slip-on. Hand-stitched for superior comfort.",
-                price: "$380"
+                price: "380"
             },
             {
                 title: "Whole Cut Oxford",
                 category: "Oxford",
                 image: "/assets/whole-cut-oxfords.jpg",
                 description: "Made from a single piece of leather. The epitome of formal sophistication.",
-                price: "$550"
+                price: "550"
             },
             {
                 title: "Double Monk Strap",
                 category: "Monk",
                 image: "/assets/whole-cut-oxfords.jpg", // Placeholder until we have a 4th image, using same for now or random
                 description: "A bold statement for the distinguished gentleman.",
-                price: "$420"
+                price: "420"
             }
         ];
         await Product.insertMany(products);

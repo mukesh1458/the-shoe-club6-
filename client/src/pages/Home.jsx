@@ -11,6 +11,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, User, Quote } from 'lucide-react';
 import { fadeInUp, staggerContainer } from '../utils/animations';
 
+import { API_BASE } from '../utils/api';
+
 const Home = () => {
     const [products, setProducts] = useState([]);
     const [tips, setTips] = useState([]);
@@ -19,7 +21,6 @@ const Home = () => {
     const [selectedTip, setSelectedTip] = useState(null);
     const location = useLocation();
 
-    const API_BASE = import.meta.env.VITE_API_URL || 'https://the-shoe-club6.onrender.com';
 
     useEffect(() => {
         const fetchData = async () => {

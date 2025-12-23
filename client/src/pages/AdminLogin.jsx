@@ -4,14 +4,14 @@ import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, User, PlusCircle, ArrowRight } from 'lucide-react';
 
+import { API_BASE } from '../utils/api';
+
 const AdminLogin = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isSetup, setIsSetup] = useState(true);
     const [checking, setChecking] = useState(false);
     const navigate = useNavigate();
-
-    const API_BASE = import.meta.env.VITE_API_URL || 'https://the-shoe-club6.onrender.com';
 
     useEffect(() => {
         checkSetup();

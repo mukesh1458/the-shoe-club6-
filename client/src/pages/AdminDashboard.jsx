@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { fadeInUp, staggerContainer } from '../utils/animations';
 
+import { API_BASE } from '../utils/api';
+
 const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState('products');
     const [products, setProducts] = useState([]);
@@ -22,8 +24,6 @@ const AdminDashboard = () => {
     useEffect(() => {
         fetchData();
     }, [activeTab]);
-
-    const API_BASE = import.meta.env.VITE_API_URL || 'https://the-shoe-club6.onrender.com';
 
     const fetchData = async () => {
         setLoading(true);
@@ -254,7 +254,7 @@ const AdminDashboard = () => {
                                                     type="number"
                                                     value={formData.price ? formData.price.toString().replace(/[^\d]/g, '') : ''}
                                                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                                                    className="w-full bg-luxury-black border border-white/10 rounded p-2 pl-8 text-white focus:border-gold-accent outline-none"
+                                                    className="w-full bg-luxury-black border border-white/10 rounded p-2 pl-10 text-white focus:border-gold-accent outline-none"
                                                     placeholder="0"
                                                     required
                                                 />
