@@ -11,6 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({
   origin: [
+    'https://the-shoe-clubv.vercel.app',
     'https://the-shoe-club-vercel.vercel.app',
     'http://localhost:5173',
     'http://localhost:3000'
