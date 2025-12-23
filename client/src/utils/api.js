@@ -10,7 +10,7 @@ export const getApiBase = () => {
     // Return localhost server if local, otherwise the Render production URL
     return isLocalhost
         ? 'http://localhost:5000'
-        : 'https://the-shoe-club6.onrender.com';
+        : 'https://the-shoe-club-vercel.vercel.app'; // Updated to match the CORS origin and user's context
 };
 
 export const API_BASE = getApiBase();
