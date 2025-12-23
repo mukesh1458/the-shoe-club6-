@@ -11,6 +11,7 @@ import StudentDiscountBadge from './components/StudentDiscountBadge';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import { pageTransition } from './utils/animations';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const PageWrapper = ({ children }) => {
   return (
@@ -28,9 +29,11 @@ const PageWrapper = ({ children }) => {
 
 function App() {
   return (
-    <Router>
-      <AppContent />
-    </Router>
+    <ErrorBoundary>
+      <Router>
+        <AppContent />
+      </Router>
+    </ErrorBoundary>
   );
 }
 

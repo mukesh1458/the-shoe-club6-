@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { fadeInUp, staggerContainer } from '../utils/animations';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 import { API_BASE } from '../utils/api';
 
@@ -131,6 +132,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="min-h-screen bg-luxury-black text-cream font-sans relative">
+            {loading && <LoadingSpinner />}
             {/* Admin Header */}
             <header className="bg-charcoal border-b border-white/10 shadow-lg">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">

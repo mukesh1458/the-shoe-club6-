@@ -6,6 +6,7 @@ import ProductCard from '../components/ProductCard';
 import TipCard from '../components/TipCard';
 import Footer from '../components/Footer';
 import axios from 'axios';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, User, Quote } from 'lucide-react';
@@ -75,9 +76,7 @@ const Home = () => {
                 </motion.div>
 
                 {loading ? (
-                    <div className="flex justify-center items-center py-20">
-                        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gold-accent"></div>
-                    </div>
+                    <LoadingSpinner />
                 ) : error ? (
                     <div className="text-center py-20 text-red-400">
                         <p>{error}</p>

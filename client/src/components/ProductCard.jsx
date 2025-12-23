@@ -16,8 +16,13 @@ const ProductCard = ({ product }) => {
             <div className="aspect-[4/5] w-full overflow-hidden bg-gray-950 relative">
                 <img
                     src={imageUrl}
-                    alt={product.title}
+                    alt={product.title || 'Luxury Footwear'}
+                    loading="lazy"
                     className="h-full w-full object-cover object-center scale-[1.02] group-hover:scale-110 transition-transform duration-[1.5s] ease-[0.22, 1, 0.36, 1]"
+                    onError={(e) => {
+                        e.target.src = 'https://via.placeholder.com/600x800?text=The+Shoe+Club';
+                        e.target.onerror = null;
+                    }}
                 />
 
                 {/* Shimmer on Hover */}
