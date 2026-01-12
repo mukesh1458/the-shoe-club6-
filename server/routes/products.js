@@ -36,9 +36,12 @@ const upload = multer({
 // Get All Products
 router.get('/', async (req, res) => {
     try {
+        console.log('GET /api/products - Request received');
         const products = await Product.find();
+        console.log('GET /api/products - Found', products.length, 'products');
         res.json(products);
     } catch (err) {
+        console.error('GET /api/products - Error:', err);
         res.status(500).json({ error: err.message });
     }
 });
