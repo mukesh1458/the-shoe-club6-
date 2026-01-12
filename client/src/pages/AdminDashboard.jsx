@@ -294,7 +294,7 @@ const AdminDashboard = () => {
                                     </div>
                                     <div>
                                         <label className="block text-sm text-gray-400 mb-1">Description</label>
-                                        <textarea name="description" value={formData.description || ''} onChange={handleChange} className="w-full bg-luxury-black border border-white/10 rounded p-2 text-white focus:border-gold-accent outline-none" rows="3" />
+                                        <textarea name="description" value={formData.description || ''} onChange={handleChange} className="w-full bg-luxury-black border border-white/10 rounded p-2 text-white focus:border-gold-accent outline-none" rows="3" required />
                                     </div>
                                 </>
                             ) : (
