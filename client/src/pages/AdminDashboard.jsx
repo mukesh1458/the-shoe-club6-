@@ -181,7 +181,15 @@ const AdminDashboard = () => {
                                     >
                                         <div className="flex items-center space-x-4">
                                             <div className="h-16 w-16 bg-gray-700 rounded flex-shrink-0 overflow-hidden">
-                                                <img src={item.image ? (item.image.startsWith('http') || item.image.startsWith('/assets') ? item.image : `${API_BASE}${item.image}`) : 'https://via.placeholder.com/150'} className="h-full w-full object-cover" alt={item.title} />
+                                                <img
+                                                    src={item.image
+                                                        ? (item.image.startsWith('http') || item.image.startsWith('/assets') || item.image.startsWith('data:')
+                                                            ? item.image
+                                                            : `${API_BASE}${item.image}`)
+                                                        : 'https://via.placeholder.com/150'}
+                                                    className="h-full w-full object-cover"
+                                                    alt={item.title}
+                                                />
                                             </div>
                                             <div>
                                                 <h4 className="font-serif text-lg leading-tight">{item.title}</h4>
@@ -273,7 +281,11 @@ const AdminDashboard = () => {
                                         {(selectedFile || (editingItem && editingItem.image)) && (
                                             <div className="mt-2 h-20 w-20 rounded overflow-hidden border border-white/10">
                                                 <img
-                                                    src={selectedFile ? URL.createObjectURL(selectedFile) : (editingItem.image && (editingItem.image.startsWith('http') || editingItem.image.startsWith('/assets') || editingItem.image.startsWith('data:')) ? editingItem.image : `${API_BASE}${editingItem.image}`)}
+                                                    src={selectedFile
+                                                        ? URL.createObjectURL(selectedFile)
+                                                        : (editingItem.image && (editingItem.image.startsWith('http') || editingItem.image.startsWith('/assets') || editingItem.image.startsWith('data:'))
+                                                            ? editingItem.image
+                                                            : `${API_BASE}${editingItem.image}`)}
                                                     className="h-full w-full object-cover"
                                                     alt="Preview"
                                                 />

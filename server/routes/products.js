@@ -1,13 +1,37 @@
 const router = require('express').Router();
 const Product = require('../models/Product');
 const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
+// Configure disk storage for multer
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const uploadDir = path.join(__dirname, '../uploads');
+        // Ensure uploads directory exists
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+        cb(null, uploadDir);
+    },
+    filename: (req, file, cb) => {
+        // Create unique filename with timestamp
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, 'product-' + uniqueSuffix + path.extname(file.originalname));
+    }
+});
 
-const convertToBase64 = (file) => {
-    return `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
-};
+const upload = multer({
+    storage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+    fileFilter: (req, file, cb) => {
+        // Accept images only
+        if (!file.mimetype.startsWith('image/')) {
+            return cb(new Error('Only image files are allowed!'), false);
+        }
+        cb(null, true);
+    }
+});
 
 // Get All Products
 router.get('/', async (req, res) => {
@@ -24,7 +48,8 @@ router.post('/', upload.single('image'), async (req, res) => {
     try {
         const productData = { ...req.body };
         if (req.file) {
-            productData.image = convertToBase64(req.file);
+            // Store relative path to the uploaded file
+            productData.image = '/uploads/' + req.file.filename;
         }
         const newProduct = new Product(productData);
         const saved = await newProduct.save();
@@ -38,9 +63,22 @@ router.post('/', upload.single('image'), async (req, res) => {
 router.put('/:id', upload.single('image'), async (req, res) => {
     try {
         const productData = { ...req.body };
+
+        // If a new file was uploaded
         if (req.file) {
-            productData.image = convertToBase64(req.file);
+            // Get the old product to delete old image file
+            const oldProduct = await Product.findById(req.params.id);
+            if (oldProduct && oldProduct.image && oldProduct.image.startsWith('/uploads/')) {
+                const oldImagePath = path.join(__dirname, '..', oldProduct.image);
+                // Delete old image file if it exists
+                if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath);
+                }
+            }
+            // Store new image path
+            productData.image = '/uploads/' + req.file.filename;
         }
+
         const updated = await Product.findByIdAndUpdate(req.params.id, productData, { new: true });
         res.json(updated);
     } catch (err) {
@@ -51,6 +89,16 @@ router.put('/:id', upload.single('image'), async (req, res) => {
 // Delete Product
 router.delete('/:id', async (req, res) => {
     try {
+        const product = await Product.findById(req.params.id);
+
+        // Delete associated image file if it exists
+        if (product && product.image && product.image.startsWith('/uploads/')) {
+            const imagePath = path.join(__dirname, '..', product.image);
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+        }
+
         await Product.findByIdAndDelete(req.params.id);
         res.json({ msg: 'Product deleted' });
     } catch (err) {
