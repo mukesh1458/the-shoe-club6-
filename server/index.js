@@ -11,6 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cors({
   origin: [
+    'https://the-shoe-club64.vercel.app',
     'https://the-shoe-club63.vercel.app',
     'https://the-shoe-clubv.vercel.app',
     'https://the-shoe-club-vercel.vercel.app',
